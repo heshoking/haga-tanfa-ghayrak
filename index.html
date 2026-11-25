@@ -11,9 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#eef3f0;
+    --bg:#ffffff;
     --surface:#ffffff;
-    --surface-2:#f4f8f5;
+    --surface-2:#f4f7f5;
     --ink:#17251f;
     --ink-soft:#4c5d55;
     --line:#d9e4dd;
@@ -25,8 +25,8 @@
     --amber-ink:#7c3a06;
     --danger:#b3261e;
     --heart:#d92d20;
-    --shadow:0 10px 30px rgba(11,60,48,.10);
-    --radius:18px;
+    --shadow:0 4px 16px rgba(11,60,48,.06);
+    --radius:14px;
   }
   @media (prefers-color-scheme: dark){
     :root{
@@ -57,32 +57,45 @@
   .wrap{max-width:1060px;margin:0 auto;padding:0 16px 56px}
   [hidden]{display:none !important}
 
-  /* ---------- شريط "ده موقع" ---------- */
-  .site-note{background:var(--brand);color:#fff}
-  .site-note .inner{
-    max-width:1060px;margin:0 auto;padding:14px 16px;
-    display:flex;gap:14px;align-items:flex-start;
+  /* ---------- الهيدر ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;background:var(--surface);
+    border-bottom:1px solid var(--line);
   }
-  .site-note .badge{
-    flex:none;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.16);
-    display:flex;align-items:center;justify-content:center;
+  .topbar-inner{
+    max-width:1060px;margin:0 auto;padding:10px 16px;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
   }
-  .site-note h2{font-size:19px;font-weight:800;color:#fff}
-  .site-note p{margin:2px 0 0;font-size:14.5px;color:#e6f4ee}
-  .site-note strong{color:#fff}
+  .logo{
+    font-family:"Cairo",sans-serif;font-size:22px;font-weight:900;color:var(--ink);
+    text-decoration:none;white-space:nowrap;line-height:1.2;
+  }
+  .logo span{color:var(--brand)}
+  .loc{
+    display:inline-flex;align-items:center;gap:5px;font-size:14.5px;font-weight:700;
+    color:var(--ink-soft);white-space:nowrap;
+  }
+  .topsearch{flex:1 1 220px}
+  .topnav{display:flex;align-items:center;gap:4px;margin-inline-start:auto}
+  .nav-link{
+    color:var(--ink);text-decoration:none;font-weight:700;font-size:15px;
+    padding:8px 10px;border-radius:9px;white-space:nowrap;display:inline-flex;align-items:center;min-height:44px;
+  }
+  .nav-link:hover{background:var(--surface-2)}
+  .add-btn{min-height:44px;padding:9px 18px;font-size:15.5px}
+  @media (max-width:680px){
+    .topsearch{order:3;flex:1 1 100%}
+    .logo{font-size:20px}
+  }
+  section[id],#myads{scroll-margin-top:86px}
 
-  /* ---------- الترويسة ---------- */
-  .hero{padding:30px 0 8px}
-  .hero .place{
-    display:inline-flex;align-items:center;gap:7px;
-    background:var(--brand-soft);color:var(--brand-dark);
-    border:1px solid var(--line);border-radius:999px;
-    padding:5px 14px;font-size:14px;font-weight:600;
-  }
-  .hero h1{font-size:clamp(34px,7vw,54px);font-weight:900;margin:14px 0 8px}
-  .hero h1 .accent{color:var(--brand)}
-  .hero .lead{font-size:clamp(16px,2.6vw,19px);color:var(--ink-soft);max-width:640px;margin:0}
-  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+  /* ---------- سطر التعريف ---------- */
+  .tagline{margin:20px 2px 0;font-size:clamp(16px,2.6vw,19px);font-weight:700}
+  .tagline strong{color:var(--brand-dark)}
+
+  /* ---------- شريط التصنيفات ---------- */
+  .catsbar{margin-top:14px}
+  .catsbar .chips{margin-top:0}
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
     border-radius:12px;padding:10px 22px;font-family:inherit;font-size:16px;font-weight:700;
@@ -96,9 +109,8 @@
   /* ---------- البحث والفلاتر ---------- */
   .panel{
     background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:18px;margin-top:26px;
+    box-shadow:var(--shadow);padding:18px;margin-top:16px;
   }
-  .search-row{display:flex;gap:10px;flex-wrap:wrap}
   .search-box{flex:1 1 260px;position:relative}
   .search-box svg{position:absolute;inset-inline-start:13px;top:50%;transform:translateY(-50%);color:var(--ink-soft);pointer-events:none}
   .search-box input{
@@ -146,9 +158,14 @@
   /* ---------- كروت الإعلانات (زي أوليكس) ---------- */
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   @media (max-width:860px){ .grid{grid-template-columns:repeat(2,1fr)} }
-  @media (max-width:540px){ .grid{grid-template-columns:1fr} }
+  @media (max-width:540px){
+    .grid{gap:10px}
+    .card .body{padding:10px 12px 12px}
+    .card .price{font-size:17px}
+    .card h3{font-size:15px}
+  }
   .card{
-    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
     overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(11,60,48,.05);
     cursor:pointer;text-align:start;
   }
@@ -316,7 +333,7 @@
   .photo-drop .t{font-weight:800;font-size:16.5px;color:var(--brand-dark)}
   .photo-drop .s{font-size:13.5px;color:var(--ink-soft);margin-top:2px}
   .photo-drop input,.photo-btn input{
-    position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px;
+    position:absolute;inset:0;width:100%;height:100%;opacity:.02;cursor:pointer;font-size:16px;
   }
   .photo-previews{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .photo-previews:empty{display:none}
@@ -393,32 +410,30 @@
   .auth-in-row .who{min-width:0}
   .auth-in-row .who strong{font-size:16.5px;word-break:break-all}
 
-  /* ---------- الأمان ---------- */
-  .safety{margin-top:34px}
-  .safety h2{font-size:22px;font-weight:800;margin-bottom:12px}
-  .safety .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  @media (max-width:640px){ .safety .rules{grid-template-columns:1fr} }
-  .rule{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:flex;gap:12px}
-  .rule .ic{flex:none;width:40px;height:40px;border-radius:11px;background:var(--amber-soft);color:var(--amber);display:flex;align-items:center;justify-content:center}
-  .rule h3{font-size:16px;font-weight:800}
-  .rule p{margin:2px 0 0;font-size:14px;color:var(--ink-soft)}
   footer{margin-top:36px;text-align:center;color:var(--ink-soft);font-size:13.5px}
 </style>
 </head>
 <body>
 
-<!-- إجابة سؤال: أنزّل إزاي؟ -->
-<div class="site-note" role="note">
-  <div class="inner">
-    <div class="badge" aria-hidden="true">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+<!-- الهيدر -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="logo" href="#">حاجة <span>تنفع غيرك</span></a>
+    <span class="loc">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      العبور
+    </span>
+    <div class="search-box topsearch">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="دوّر على حاجة… مثال: كرسي، خلاط، كتب" aria-label="بحث">
     </div>
-    <div>
-      <h2>ده موقع — مش محتاج تنزيل ولا تثبيت</h2>
-      <p>الموقع <strong>فاتح قدامك دلوقتي</strong> — مفيش ملف تنزّله ولا برنامج تثبّته. انزل تحت: دوّر في الحاجات المعروضة، دوس على أي إعلان عشان تشوف تفاصيله، أو دوس <strong>«أضف حاجة عندك»</strong> وارفع صورها من موبايلك على طول. وعايز ترجع بسرعة؟ من متصفح الموبايل اختار <strong>«إضافة إلى الشاشة الرئيسية»</strong>.</p>
-    </div>
+    <nav class="topnav">
+      <a class="nav-link" href="#myads">إعلاناتي</a>
+      <a class="nav-link" href="#auth" id="hdrLogin">دخول</a>
+      <a class="btn btn-primary add-btn" href="#add">+ أضف إعلان</a>
+    </nav>
   </div>
-</div>
+</header>
 
 <div class="wrap">
 
@@ -434,25 +449,12 @@
   <!-- ========== العرض الرئيسي ========== -->
   <div id="mainView">
 
-  <header class="hero">
-    <span class="place">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-      البداية: مدينة العبور بس
-    </span>
-    <h1>حاجة <span class="accent">تنفع غيرك</span></h1>
-    <p class="lead">عندك حاجة مستغني عنها؟ صوّرها وارفعها هنا — حد من جيرانك في العبور ممكن يستفيد بيها، بسعر زهيد أو مجاناً لو حابب تتبرع بيها. دوس على أي إعلان عشان تشوف صورته كبيرة وتفاصيله.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="#add">أضف حاجة عندك</a>
-      <a class="btn btn-ghost" href="#browse">شوف الحاجات المعروضة</a>
-      <a class="btn btn-ghost" href="#myads">إعلاناتي</a>
-    </div>
-  </header>
+  <p class="tagline">حاجة مش محتاجها؟ <strong>بِعها أو اتبرع بيها</strong> — تؤجر وتستفيد وتفيد غيرك.</p>
 
   <!-- تسجيل الدخول -->
   <section class="panel auth-panel" id="auth" aria-label="تسجيل الدخول">
     <div id="authOut">
-      <h2>حسابك — عشان تنشر وتشوف إعلاناتك</h2>
-      <p class="sub">الإعلانات دلوقتي مشتركة بين كل أهل العبور: اللي تنشره هنا بيشوفه الكل. سجّل دخولك بالإيميل عشان تنشر إعلاناتك وتعدّلها وتحفظ مفضلتك — والتصفّح والبحث شغالين من غير حساب عادي.</p>
+      <h2>تسجيل الدخول</h2>
       <div class="auth-grid">
         <label class="f">الإيميل
           <input id="authEmail" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" dir="ltr" placeholder="you@example.com">
@@ -461,7 +463,7 @@
           <input id="authPass" type="password" autocomplete="current-password" dir="ltr" placeholder="••••••••">
         </label>
       </div>
-      <p class="auth-hint">أول مرة هنا؟ اكتب إيميلك وكلمة سر من اختيارك ودوس <strong>«حساب جديد»</strong> — هتدخل على طول من غير ما تستنى إيميل تأكيد. الإيميل لازم يبقى بحروف إنجليزي ومن غير مسافات، زي: <bdi dir="ltr">name@gmail.com</bdi></p>
+      <p class="auth-hint">أول مرة هنا؟ اكتب إيميلك وكلمة سر ودوس <strong>«حساب جديد»</strong>.</p>
       <div class="auth-btns">
         <button class="btn btn-primary" id="loginBtn" type="button">دخول</button>
         <button class="btn btn-ghost" id="signupBtn" type="button">حساب جديد</button>
@@ -472,26 +474,20 @@
       <div class="auth-in-row">
         <div class="who">
           <strong id="authUserEmail"></strong>
-          <div class="hint">مسجّل دخول — تقدر تنشر إعلانات جديدة، وتعدّل إعلاناتك أو تحذفها من «إعلاناتي»، وتحفظ في المفضلة.</div>
         </div>
         <button class="btn btn-ghost" id="logoutBtn" type="button">تسجيل خروج</button>
       </div>
     </div>
   </section>
 
-  <!-- البحث والفلاتر -->
-  <section class="panel" id="browse" aria-label="البحث والفلاتر">
-    <div class="search-row">
-      <div class="search-box">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="q" type="search" placeholder="دوّر على حاجة… مثال: كرسي، خلاط، كتب" aria-label="بحث">
-      </div>
-    </div>
+  <!-- شريط التصنيفات -->
+  <div class="catsbar">
     <div class="chips" id="cats" role="group" aria-label="التصنيفات">
       <button class="chip on" data-cat="">الكل</button>
-      <button class="chip" data-cat="ملابس">ملابس</button>
-      <button class="chip" data-cat="أجهزة">أجهزة</button>
       <button class="chip" data-cat="أثاث">أثاث</button>
+      <button class="chip" data-cat="إلكترونيات">إلكترونيات</button>
+      <button class="chip" data-cat="أجهزة">أجهزة</button>
+      <button class="chip" data-cat="ملابس">ملابس</button>
       <button class="chip" data-cat="كتب">كتب</button>
       <button class="chip" data-cat="أطفال">أطفال</button>
       <button class="chip" data-cat="أخرى">أخرى</button>
@@ -501,7 +497,11 @@
         المفضلة بس
       </button>
     </div>
-    <div class="filters">
+  </div>
+
+  <!-- الفلاتر -->
+  <section class="panel" id="browse" aria-label="الفلاتر" style="margin-top:12px">
+    <div class="filters" style="border-top:none;padding-top:0;margin-top:0">
       <div>
         <label>السعر (جنيه)</label>
         <div class="price-range">
@@ -535,7 +535,7 @@
   </section>
 
   <div class="results-head">
-    <h2>المعروض دلوقتي في العبور</h2>
+    <h2>إعلانات العبور</h2>
     <span class="count" id="count"></span>
   </div>
   <div class="grid" id="list"></div>
@@ -545,16 +545,15 @@
     <h2>إعلاناتي</h2>
     <span class="count" id="myCount" style="color:var(--ink-soft);font-size:14px"></span>
   </div>
-  <p class="myads-sub">إعلاناتك مرتبطة بحسابك وبتظهر هنا لما تكون مسجّل دخولك — وكل الناس بتشوفها في القائمة الرئيسية. من هنا تقدر <strong>تعدّل</strong> أي حاجة فيها، أو <strong>تحذفها</strong>، أو تعمل لها <strong>«إعادة نشر»</strong> فترجع أول القائمة كأنها لسه نازلة دلوقتي.</p>
   <p class="section-msg" id="myMsg" role="status"></p>
   <div class="grid" id="myList"></div>
 
   <!-- إضافة / تعديل إعلان -->
   <section class="panel form-panel" id="add">
-    <h2 id="formTitle">أضف حاجة عندك</h2>
-    <p class="sub" id="formSub">صوّر الحاجة واملأ البيانات دي — إعلانك هيظهر على طول في أول القائمة وفي «إعلاناتي».</p>
+    <h2 id="formTitle">أضف إعلان</h2>
+    <p class="sub" id="formSub" hidden></p>
     <div class="edit-banner" id="editBanner" hidden>
-      <div class="txt">إنت بتعدّل إعلانك دلوقتي<span>غيّر اللي إنت عايزه تحت، وبعدين دوس «حفظ التعديلات». الصور اللي ما شلتهاش هتفضل زي ما هي.</span></div>
+      <div class="txt">إنت بتعدّل إعلانك دلوقتي</div>
       <button type="button" class="btn-cancel" id="cancelEditTop">إلغاء التعديل</button>
     </div>
     <form id="addForm" novalidate>
@@ -563,7 +562,7 @@
         <label class="photo-drop" style="margin-top:6px">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand)"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           <div class="t" id="photoTitle">دوس هنا واختار صور من موبايلك</div>
-          <div class="s">تقدر تختار أكتر من صورة مرة واحدة. أول صورة هي اللي هتظهر على الكارت.</div>
+          <div class="s">أول صورة هي اللي هتظهر على الكارت.</div>
           <input id="photo" type="file" accept="image/*" multiple>
         </label>
         <div class="photo-previews" id="photoPreviews"></div>
@@ -588,9 +587,10 @@
       <div class="two">
         <label class="f">التصنيف
           <select id="cat">
-            <option>ملابس</option>
-            <option>أجهزة</option>
             <option>أثاث</option>
+            <option>إلكترونيات</option>
+            <option>أجهزة</option>
+            <option>ملابس</option>
             <option>كتب</option>
             <option>أطفال</option>
             <option>أخرى</option>
@@ -633,7 +633,7 @@
       <div id="negWrap">
         <span style="font-weight:700;font-size:15px">التفاوض</span>
         <div class="neg-row">
-          <div class="lbl">قابل للتفاوض<small>هيظهر على إعلانك شارة «قابل للتفاوض»</small></div>
+          <div class="lbl">قابل للتفاوض</div>
           <button type="button" class="switch" id="negToggle" aria-pressed="false" aria-label="قابل للتفاوض"></button>
         </div>
       </div>
@@ -643,30 +643,11 @@
         <button class="btn-cancel" type="button" id="cancelEditBtn" hidden>إلغاء التعديل — رجوع من غير حفظ</button>
       </div>
       <p class="form-msg" id="msg" role="status"></p>
-      <p class="hint">إعلانك بيتنشر على الموقع المشترك وبيشوفه كل زوّار العبور — ولازم تكون مسجّل دخولك الأول عشان تقدر تنشر أو تعدّل.</p>
+      <p class="hint" id="publishHint" hidden>سجّل دخولك عشان تنشر</p>
     </form>
   </section>
 
-  <!-- الأمان -->
-  <section class="safety">
-    <h2>قبل ما تقابل حد — 3 قواعد سريعة</h2>
-    <div class="rules">
-      <div class="rule">
-        <div class="ic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <div><h3>قابل في مكان عام</h3><p>اتقابلوا في حتة معروفة ومفتوحة، وعاين الحاجة بنفسك قبل أي اتفاق.</p></div>
-      </div>
-      <div class="rule">
-        <div class="ic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></div>
-        <div><h3>الدفع عند الاستلام</h3><p>متدفعش مقدماً ومتحوّلش فلوس لحد قبل ما تستلم الحاجة وتشوفها.</p></div>
-      </div>
-      <div class="rule">
-        <div class="ic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-        <div><h3>اتفق قبل المقابلة</h3><p>لو السعر رمزي، اتفقوا عليه في الرسائل الأول عشان المقابلة تبقى سريعة وواضحة.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <footer>حاجة تنفع غيرك — بيع بسعر زهيد + تبرّع مجاني · البداية من مدينة العبور</footer>
+  <footer>حاجة تنفع غيرك — مدينة العبور</footer>
   </div><!-- /mainView -->
 </div>
 
@@ -876,15 +857,15 @@
     document.getElementById("countInline").textContent = items.length ? items.length : "لا يوجد";
     list.innerHTML = items.length
       ? items.map(function(it){ return cardHTML(it, false); }).join("")
-      : '<div class="empty" style="grid-column:1/-1"><strong>مفيش نتيجة مطابقة</strong>جرّب توسّع نطاق السعر أو تشيل فلتر — أو كن أول واحد يضيف الحاجة دي.</div>';
+      : '<div class="empty" style="grid-column:1/-1"><strong>مفيش نتيجة مطابقة</strong>جرّب تغيّر الفلاتر.</div>';
     var myList = document.getElementById("myList");
     document.getElementById("myCount").textContent = mine.length ? (mine.length + " إعلان") : "";
     myList.innerHTML = mine.length
       ? mine.slice().sort(function(a,b){ return (b.createdAt||0) - (a.createdAt||0); })
           .map(function(it){ return cardHTML(it, true); }).join("")
       : (currentUser
-          ? '<div class="empty" style="grid-column:1/-1"><strong>لسه ما ضفتش إعلانات</strong>أول إعلان تنشره من النموذج اللي تحت هيظهر هنا، وتقدر تعدّله أو تحذفه أو تعيد نشره في أي وقت.</div>'
-          : '<div class="empty" style="grid-column:1/-1"><strong>سجّل دخولك الأول</strong>إعلاناتي بتظهر للي مسجّل دخول بس — اعمل دخول من خانة الحساب اللي فوق، وهتلاقي إعلاناتك هنا.</div>');
+          ? '<div class="empty" style="grid-column:1/-1"><strong>لسه ما ضفتش إعلانات</strong></div>'
+          : '<div class="empty" style="grid-column:1/-1"><strong>سجّل دخولك عشان تشوف إعلاناتك</strong></div>');
   }
 
   /* ---------- المفضلة ---------- */
@@ -1261,8 +1242,9 @@
     formPanel.classList.remove("editing");
     editBanner.hidden = true;
     cancelEditBtn.hidden = true;
-    formTitle.textContent = "أضف حاجة عندك";
-    formSub.textContent = "صوّر الحاجة واملأ البيانات دي — إعلانك هيظهر على طول في أول القائمة وفي «إعلاناتي».";
+    formTitle.textContent = "أضف إعلان";
+    formSub.textContent = "";
+    formSub.hidden = true;
     submitBtn.textContent = "انشر الإعلان";
   }
   function cancelEdit(silent){
@@ -1270,7 +1252,7 @@
     resetFormFields();
     var msg = document.getElementById("msg");
     if(!silent){
-      msg.textContent = "اتلغى التعديل — إعلانك زي ما هو، متغيّرش فيه حاجة.";
+      msg.textContent = "اتلغى التعديل.";
       msg.className = "form-msg ok";
     } else { msg.textContent = ""; msg.className = "form-msg"; }
     render();
@@ -1296,7 +1278,8 @@
     editBanner.hidden = false;
     cancelEditBtn.hidden = false;
     formTitle.textContent = "تعديل الإعلان";
-    formSub.textContent = "بتعدّل: «" + it.title + "» — غيّر اللي إنت عايزه ودوس «حفظ التعديلات».";
+    formSub.textContent = "بتعدّل: «" + it.title + "»";
+    formSub.hidden = false;
     submitBtn.textContent = "حفظ التعديلات";
     var msg = document.getElementById("msg");
     msg.textContent = ""; msg.className = "form-msg";
@@ -1353,7 +1336,7 @@
       return;
     }
     if(!currentUser){
-      msg.textContent = "لازم تسجّل دخولك الأول عشان تنشر إعلان — اعمل دخول من خانة الحساب اللي فوق.";
+      msg.textContent = "سجّل دخولك عشان تنشر.";
       msg.className = "form-msg err";
       document.getElementById("auth").scrollIntoView({behavior:"smooth"});
       return;
@@ -1396,14 +1379,14 @@
       if(mode === "edit"){
         exitEditMode();
         resetFormFields();
-        msg.textContent = "اتحفظ التعديل — إعلانك اتحدّث وظهر بالتعديل الجديد لكل الناس.";
+        msg.textContent = "اتحفظ التعديل.";
         msg.className = "form-msg ok";
         loadListings();
         document.getElementById("myads").scrollIntoView({behavior:"smooth"});
       } else {
         resetFormFields();
         submitBtn.textContent = "انشر الإعلان";
-        msg.textContent = "اتنشر — إعلانك بقى ظاهر لكل أهل العبور في أول القائمة، وهتلاقيه في «إعلاناتي» تحت.";
+        msg.textContent = "اتنشر إعلانك.";
         msg.className = "form-msg ok";
         loadListings();
         document.getElementById("browse").scrollIntoView({behavior:"smooth"});
@@ -1427,6 +1410,10 @@
     document.getElementById("authOut").hidden = !!currentUser;
     document.getElementById("authIn").hidden = !currentUser;
     if(currentUser) document.getElementById("authUserEmail").textContent = currentUser.email || "";
+    var ph = document.getElementById("publishHint");
+    if(ph) ph.hidden = !!currentUser;
+    var hl = document.getElementById("hdrLogin");
+    if(hl) hl.textContent = currentUser ? "حسابي" : "دخول";
   }
   /* تنضيف الإيميل: الكيبورد العربي بيحوّل الأرقام ويدخّل مسافات وحروف خفية،
      وده كان بيخلي السيرفر يرفض الإيميل بـ "invalid format" */
